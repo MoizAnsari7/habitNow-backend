@@ -15,3 +15,20 @@ router.post('/register', async (req, res) => {
         res.status(400).send({ error: 'Registration failed', details: error.message });
     }
 });
+
+
+// Login
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const user = await User.findOne({ email });
+        if (!user || !(await user.comparePassword(password))) {
+            return res.status(401).send({ error: 'Invalid credentials' });
+        }
+
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        res.send({ token, user });
+    } catch (error) {
+        res.status(500).send({ error: 'Login failed', details: error.message });
+    }
+});
