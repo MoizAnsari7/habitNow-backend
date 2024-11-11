@@ -1,5 +1,6 @@
 const Task = require('../models/Task');
 const User = require('../models/User');
+const router = require('./category.routes');
 
 // Create Task
 router.post('/tasks', async (req, res) => {
@@ -25,3 +26,27 @@ router.post('/tasks', async (req, res) => {
         res.status(500).send({ error: 'Failed to create task' });
     }
 });
+
+// One-Time Task Creation API
+router.post('/tasks', async (req, res) => {
+    const { userId, name, description, date, time, reminders, priority } = req.body;
+
+    try {
+        const task = new Task({
+            userId,
+            name,
+            description,
+            date,
+            time,
+            reminders,
+            priority
+        });
+
+        await task.save();
+        res.status(201).send({ message: 'One-time task created successfully', task });
+    } catch (error) {
+        res.status(400).send({ error: 'Failed to create task', details: error.message });
+    }
+});
+
+module.exports = router;
