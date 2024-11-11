@@ -29,4 +29,15 @@ router.post('/habits', async (req, res) => {
     }
 });
 
+
+// Retrieve habits
+router.get('/habits', async (req, res) => {
+    try {
+        const habits = await Habit.find({ userId: req.user.id });
+        res.send(habits);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
 module.exports = router;
