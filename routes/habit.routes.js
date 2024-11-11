@@ -40,4 +40,15 @@ router.get('/habits', async (req, res) => {
     }
 });
 
+// Update habit progress
+router.patch('/habits/:id', async (req, res) => {
+    try {
+        const habit = await Habit.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.send(habit);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
+
 module.exports = router;
