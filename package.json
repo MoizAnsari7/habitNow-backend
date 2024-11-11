@@ -1,0 +1,11 @@
+{
+  "name": "habitnow-backend",
+  "version": "1.0.0",
+  "description": "HabitNow is a plateform to track routen task and habits. It build with reactJS and nodeJS with mongodb Database.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
