@@ -34,3 +34,11 @@ router.get('/icons', async (req, res) => {
     const icons = await Icon.find();
     res.send(icons);
 });
+
+// Retrieve all available colors
+router.get('/colors', async (req, res) => {
+    const colors = await Color.find();
+    res.send(colors);
+});
+
+module.exports = router;
