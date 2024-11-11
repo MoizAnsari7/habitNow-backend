@@ -32,3 +32,16 @@ router.post('/login', async (req, res) => {
         res.status(500).send({ error: 'Login failed', details: error.message });
     }
 });
+
+
+// List available subscriptions
+router.get('/subscriptions', async (req, res) => {
+    try {
+        const subscriptions = await Subscription.find();
+        res.send(subscriptions);
+    } catch (error) {
+        res.status(500).send({ error: 'Failed to fetch subscriptions' });
+    }
+});
+
+module.exports = router;
