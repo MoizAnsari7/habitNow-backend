@@ -11,3 +11,19 @@ router.get('/categories', async (req, res) => {
     const customCategories = await Category.find({ userId, type: 'custom' });
     res.send([...defaultCategories, ...customCategories]);
 });
+
+
+// Create a new custom category
+router.post('/categories', async (req, res) => {
+    const { name, description, icon, color } = req.body;
+    const newCategory = new Category({
+        name,
+        description,
+        icon,
+        color,
+        type: 'custom',
+        userId: req.user.id
+    });
+    await newCategory.save();
+    res.status(201).send(newCategory);
+});
