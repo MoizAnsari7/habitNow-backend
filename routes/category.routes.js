@@ -27,3 +27,10 @@ router.post('/categories', async (req, res) => {
     await newCategory.save();
     res.status(201).send(newCategory);
 });
+
+
+// Retrieve all available icons
+router.get('/icons', async (req, res) => {
+    const icons = await Icon.find();
+    res.send(icons);
+});
