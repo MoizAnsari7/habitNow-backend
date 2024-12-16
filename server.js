@@ -4,12 +4,14 @@ const mongoose = require('mongoose');
 const seedDefaultCategories = require('./seeds/defaultCategories');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require('dotenv').config();
+
 
 const IndexRoutes = require('./routes/index');
 
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000 ;
 const DB_URI = process.env.DB_URI || 'mongodb://localhost:27017/habitNow';
 
 // Middleware
@@ -26,7 +28,7 @@ mongoose.connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
         await seedDefaultCategories();
 
         // Start the server
-        app.listen(PORT, () => {
+        app.listen(PORT,  '0.0.0.0', () => {
             console.log(`Server is running on http://localhost:${PORT}`);
         });
     })
