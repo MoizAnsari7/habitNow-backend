@@ -5,17 +5,12 @@ const seedDefaultCategories = require('./seeds/defaultCategories');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-// Import routes (assuming you have separate route files)
-const habitRoutes = require('./routes/habit');
-const recurringTaskRoutes = require('./routes/recurringTask');
-const taskRoutes = require('./routes/task');
-const userRoutes = require('./routes/user');
-const categoryRoutes = require('./routes/category');
+const IndexRoutes = require('./routes/index');
 
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const DB_URI = process.env.DB_URI || 'mongodb://localhost:27017/your_database_name';
+const DB_URI = process.env.DB_URI || 'mongodb://localhost:27017/habitNow';
 
 // Middleware
 app.use(cors());
@@ -40,11 +35,8 @@ mongoose.connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     });
 
 // Routes
-app.use('/routes/habit', habitRoutes);
-app.use('/routes/recurringTask', recurringTaskRoutes);
-app.use('/routes/task', taskRoutes);
-app.use('/routes/user', userRoutes);
-app.use('/routes/category', categoryRoutes);
+app.use('/api', IndexRoutes);
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {

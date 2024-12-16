@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Habit = require('../models/Habit');
+const Habit = require('../models/Habit.model');
 
 // Create a new Habit
 router.post('/habits', async (req, res) => {
