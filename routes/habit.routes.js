@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Habit = require('../models/Habit.model');
+const {authenticateToken} = require('../middlewares/auth.middleware');
 
 // Create a new Habit
-router.post('/habits', async (req, res) =>  {
+router.post('/habits',authenticateToken, async (req, res) =>  {
     try {
       const { name, description, frequency, startDate, endDate, goalCount } = req.body;
   
@@ -14,7 +15,7 @@ router.post('/habits', async (req, res) =>  {
         startDate,
         endDate,
         goalCount,
-        createdBy: req.user._id, // Assuming user is authenticated
+        createdBy: req.user.id, // Assuming user is authenticated
       });
   
       await habit.save();
@@ -22,15 +23,15 @@ router.post('/habits', async (req, res) =>  {
       res.status(201).json({ success: true, data: habit });
     } catch (error) {
       console.error("Error creating habit:", error);
-      res.status(500).json({ success: false, message: "Internal Server Error" });
+      res.status(500).json({ message: "Internal Server Error" , error});
     }
   });
 
 
 // Retrieve habits
-router.get('/habits', async (req, res) =>  {
+router.get('/habits',authenticateToken, async (req, res) =>  {
     try {
-      const habits = await Habit.find({ createdBy: req.user._id, isArchived: false });
+      const habits = await Habit.find({ createdBy: req.user.id, isArchived: false });
       res.status(200).json({ success: true, data: habits });
     } catch (error) {
       console.error("Error fetching habits:", error);
