@@ -5,16 +5,16 @@ const Icon = require('../models/Icon.model');
 const Color = require('../models/Color.model');
 
 // Retrieve all categories (default and user-specific custom)
-router.get('/categories', async (req, res) => {
-    const userId = req.user.id;
-    const defaultCategories = await Category.find({ type: 'default' });
-    const customCategories = await Category.find({ userId, type: 'custom' });
-    res.send([...defaultCategories, ...customCategories]);
+router.get('/', async (req, res) => {
+    // const userId = req.user.id;
+    const defaultCategories = await Category.find();
+    const customCategories = await Category.find();
+    res.send([...defaultCategories, ...customCategories] || []);
 });
 
 
 // Create a new custom category
-router.post('/categories', async (req, res) => {
+router.post('/', async (req, res) => {
     const { name, description, icon, color } = req.body;
     const newCategory = new Category({
         name,
@@ -22,10 +22,14 @@ router.post('/categories', async (req, res) => {
         icon,
         color,
         type: 'custom',
-        userId: req.user.id
+        // userId:" req.user.id"
     });
-    await newCategory.save();
-    res.status(201).send(newCategory);
+    try {
+        await newCategory.save();
+        res.status(201).json({message:"Category Created",newCategory});
+    } catch (error) {
+        res.status(500).json({ message: 'Error creating category', error: error.message });
+    }
 });
 
 
