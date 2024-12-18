@@ -39,8 +39,8 @@ router.get('/habits',authenticateToken, async (req, res) =>  {
     }
   });
 
-// Update habit progress
-router.patch('/habits/:id', async (req, res) =>{
+/// Update habit progress
+router.put('/habits/:id', authenticateToken, async (req, res) => {
     try {
       const { id } = req.params;
       const { date, completed } = req.body;
@@ -48,7 +48,7 @@ router.patch('/habits/:id', async (req, res) =>{
       const habit = await Habit.findById(id);
   
       if (!habit) {
-        return res.status(404).json({ success: false, message: "Habit not found" });
+        return res.status(404).json({ message: "Habit not found" });
       }
   
       const progressEntry = habit.progress.find((entry) =>
@@ -68,9 +68,10 @@ router.patch('/habits/:id', async (req, res) =>{
       res.status(200).json({ success: true, data: habit });
     } catch (error) {
       console.error("Error updating progress:", error);
-      res.status(500).json({ success: false, message: "Internal Server Error" });
+      res.status(500).json({ message: "Internal Server Error" });
     }
   });
+  
 
 
 // Delete habit
