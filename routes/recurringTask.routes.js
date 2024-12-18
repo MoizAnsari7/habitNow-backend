@@ -1,4 +1,6 @@
-const RecurringTask = require('../models/RecurringTask');
+const RecurringTask = require('../models/RecurringTask.model');
+const express = require('express');
+const router = express.Router();
 
 router.post('/recurring-tasks', async (req, res) => {
     const { userId, category, subcategory, name, description, frequency, customFrequency, startDate, endDate, time, reminders, priority } = req.body;

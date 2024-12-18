@@ -1,6 +1,6 @@
 // seeds/defaultCategories.js
 const mongoose = require('mongoose');
-const Category = require('../models/Category');
+const Category = require('../models/Category.model');
 
 const defaultCategories = [
     { name: 'Health', description: 'Health-related habits', icon: 'health-icon.png', color: '#FF5733', type: 'default' },

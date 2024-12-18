@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Category = require('../models/Category');
-const Icon = require('../models/Icon');
-const Color = require('../models/Color');
+const Category = require('../models/Category.model');
+const Icon = require('../models/Icon.model');
+const Color = require('../models/Color.model');
 
 // Retrieve all categories (default and user-specific custom)
 router.get('/categories', async (req, res) => {
